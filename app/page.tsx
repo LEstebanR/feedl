@@ -1,7 +1,9 @@
+import { Hero } from '@/components/views/home/hero';
+
 export default function Home() {
   return (
-    <div>
-      <h1>Hello World</h1>
+    <div className="w-full flex items-center justify-center">
+      <Hero />
     </div>
   );
 }
