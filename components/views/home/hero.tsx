@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 
 export function Hero() {
   return (
-    <div className="flex flex-col gap-2 items-center md:w-8/12 px-2 md:px-0">
+    <div className="flex flex-col gap-2 items-center md:w-8/12 px-2 md:px-0 min-h-[calc(100dvh-4rem)] justify-center">
       <Badge
         variant="secondary"
         className="px-4 py-2 rounded-full text-md mb-6"
