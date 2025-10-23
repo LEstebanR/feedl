@@ -8,6 +8,14 @@ const LINKS = [
     label: 'About',
     href: '#about',
   },
+  {
+    label: 'Demo',
+    href: '#demo',
+  },
+  {
+    label: 'Pricing',
+    href: '#pricing',
+  },
 ];
 
 export function Header() {
@@ -15,9 +23,13 @@ export function Header() {
     <header className="w-full flex items-center justify-center h-16 sticky top-0 bg-background z-50 ">
       <div className=" flex items-center justify-between md:w-8/12 w-full px-2 md:px-0">
         <Logo />
-        <div className="items-center gap-x-2 hidden md:flex">
+        <div className="items-center gap-x-8 hidden md:flex">
           {LINKS.map(link => (
-            <Link key={link.label} href={link.href}>
+            <Link
+              key={link.label}
+              href={link.href}
+              className="hover:font-bold hover:underline hover:underline-offset-4  "
+            >
               {link.label}
             </Link>
           ))}
