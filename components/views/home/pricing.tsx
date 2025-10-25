@@ -2,6 +2,7 @@ import { Check } from 'lucide-react';
 
 import Link from 'next/link';
 
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 
@@ -61,9 +62,9 @@ export default function Pricing() {
 
           {/* Pro Plan */}
           <Card className="p-8 border-2 border-primary hover:shadow-xl transition-shadow relative flex flex-col">
-            <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-3 py-1 bg-primary text-primary-foreground text-sm font-medium rounded-full">
+            <Badge className="absolute -top-4 left-1/2 -translate-x-1/2 px-3 py-1 bg-primary-foreground text-primary">
               Most Popular
-            </div>
+            </Badge>
             <div className="flex-grow">
               <div className="mb-6">
                 <h3 className="text-2xl font-bold mb-2">Pro</h3>
