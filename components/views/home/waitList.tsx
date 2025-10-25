@@ -9,10 +9,10 @@ export default function WaitList() {
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl ">
-            All of your user&apos;s Feedback
+            All of your user&apos;s feedback
           </h2>
           <p className="text-3xl text-primary font-bold max-w-2xl mx-auto md:text-5xl">
-            Is just a click away.
+            Is just a click away!
           </p>
         </div>
       </div>

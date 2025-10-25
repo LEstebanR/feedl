@@ -17,10 +17,6 @@ import {
 
 const LINKS = [
   {
-    label: 'The problem',
-    href: '#problem',
-  },
-  {
     label: 'Features',
     href: '#about',
   },
@@ -28,10 +24,10 @@ const LINKS = [
     label: 'How it works',
     href: '#demo',
   },
-  {
-    label: 'Pricing',
-    href: '#pricing',
-  },
+  // {
+  //   label: 'Pricing',
+  //   href: '#pricing',
+  // },
 ];
 
 export function Header() {
