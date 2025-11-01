@@ -17,6 +17,10 @@ import {
 
 const LINKS = [
   {
+    label: 'The Problem',
+    href: '#problem',
+  },
+  {
     label: 'Features',
     href: '#about',
   },
