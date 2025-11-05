@@ -2,8 +2,9 @@
 
 import { Bug, Minus, ThumbsDown, ThumbsUp } from 'lucide-react';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
+import { useFeedback } from '@/components/feedback-context';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import {
@@ -17,9 +18,55 @@ type FeedbackType = 'positive' | 'negative' | 'neutral' | 'bug' | null;
 export function DemoButton() {
   const [feedbackType, setFeedbackType] = useState<FeedbackType>(null);
   const [feedback, setFeedback] = useState<string>('');
+  const [open, setOpen] = useState(false);
+  const [currentPage, setCurrentPage] = useState<string>('');
+  const { addFeedback } = useFeedback();
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      // eslint-disable-next-line no-undef
+      setCurrentPage(window.location.href);
+    }
+  }, []);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!feedbackType || !feedback.trim()) return;
+
+    addFeedback(
+      {
+        type: feedbackType,
+        message: feedback.trim(),
+        page: currentPage,
+        user: 'demo@example.com',
+        time: new Date().toLocaleTimeString(),
+      },
+      () => {
+        // Reset form
+        setFeedbackType(null);
+        setFeedback('');
+        setOpen(false);
+
+        // Scroll to demo section after a short delay to allow state update
+        if (typeof window !== 'undefined') {
+          // eslint-disable-next-line no-undef
+          setTimeout(() => {
+            // eslint-disable-next-line no-undef
+            const demoSection = document.getElementById('demo');
+            if (demoSection) {
+              demoSection.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start',
+              });
+            }
+          }, 100);
+        }
+      }
+    );
+  };
 
   return (
-    <Popover>
+    <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button
           className="fixed right-4 top-1/2 -translate-y-1/2 translate-x-1/2 rotate-[-90deg] z-50 origin-center rounded-b-none px-4 py-2"
@@ -33,7 +80,10 @@ export function DemoButton() {
         className="w-[calc(100vw-4rem)] md:w-96 max-w-96  mr-2 md:mr-4 p-0 shadow-2xl border-2"
         sideOffset={8}
       >
-        <form className="space-y-4 md:space-y-6 p-4 md:p-6 w-full">
+        <form
+          onSubmit={handleSubmit}
+          className="space-y-4 md:space-y-6 p-4 md:p-6 w-full"
+        >
           <div className="space-y-1">
             <h3 className="text-lg md:text-xl font-bold tracking-tight">
               Share your feedback
@@ -133,7 +183,7 @@ export function DemoButton() {
               Auto-captured info
             </p>
             <div className="text-[10px] md:text-xs text-muted-foreground space-y-0.5 md:space-y-1 pl-2 md:pl-3">
-              <p className="truncate">📄 Page: https://www.localhost:3000</p>
+              <p className="truncate">📄 Page: {currentPage}</p>
               <p>👤 User: demo@example.com</p>
               <p>🕐 Time: {new Date().toLocaleTimeString()}</p>
             </div>
@@ -142,7 +192,7 @@ export function DemoButton() {
           <Button
             type="submit"
             className="w-full h-10 md:h-11 text-sm md:text-base font-semibold shadow-md hover:shadow-lg transition-all"
-            disabled={!feedbackType}
+            disabled={!feedbackType || !feedback.trim()}
           >
             Send feedback
           </Button>

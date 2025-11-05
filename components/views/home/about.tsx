@@ -11,10 +11,16 @@ import { Card } from '@/components/ui/card';
 
 export function About() {
   return (
-    <section id="about" className="py-16 md:w-8/12 w-full px-2 md:px-0 mx-auto">
+    <section
+      id="about"
+      className="py-16 md:w-8/12 w-full px-2 md:px-0 mx-auto "
+    >
       <div className="flex flex-col items-center justify-center">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+          <h2 className="text-xl md:text-2xl text-secondary tracking-tight text-center">
+            Features
+          </h2>{' '}
+          <h2 className="text-3xl md:text-4xl font-bold my-4">
             Everything you need to understand your users
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">

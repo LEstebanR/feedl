@@ -10,8 +10,8 @@ export default function Home() {
     <div className="w-full flex items-center justify-center flex-col">
       <Hero />
       <Problem />
-      <About />
       <Demo />
+      <About />
       <WaitList />
       <DemoButton />
     </div>

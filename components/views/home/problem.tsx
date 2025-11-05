@@ -87,7 +87,7 @@ export function Problem() {
   return (
     <div
       id="problem"
-      className="flex flex-col  items-center gap-6 md:w-8/12 px-2 md:px-0 py-16"
+      className="flex flex-col  items-center gap-6 md:w-8/12 px-2 md:px-0 py-16 "
     >
       <h2 className="text-xl md:text-2xl text-secondary tracking-tight text-center">
         The Problem

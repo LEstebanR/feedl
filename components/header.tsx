@@ -21,17 +21,17 @@ const LINKS = [
     href: '#problem',
   },
   {
+    label: 'How it works',
+    href: '#demo',
+  },
+  {
     label: 'Features',
     href: '#about',
   },
   {
-    label: 'How it works',
-    href: '#demo',
+    label: 'Waitlist',
+    href: '#wait-list',
   },
-  // {
-  //   label: 'Pricing',
-  //   href: '#pricing',
-  // },
 ];
 
 export function Header() {

@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 
 import { Outfit } from 'next/font/google';
 
+import { FeedbackProvider } from '@/components/feedback-context';
 import { Footer } from '@/components/footer';
 import { Header } from '@/components/header';
 
@@ -27,9 +28,11 @@ export default function RootLayout({
       <body
         className={`${outfit.variable} antialiase grid min-h-dvh grid-rows-[auto_1fr_auto] w-full`}
       >
-        <Header />
-        {children}
-        <Footer />
+        <FeedbackProvider>
+          <Header />
+          {children}
+          <Footer />
+        </FeedbackProvider>
       </body>
     </html>
   );
