@@ -1,5 +1,5 @@
 {
-  "buildCommand": "prisma generate && prisma migrate deploy && next build --turbopack",
+  "buildCommand": "prisma generate && (if [ -n \"$DATABASE_URL\" ]; then prisma migrate deploy; else echo 'Migration skipped - DATABASE_URL not available'; fi) && next build --turbopack",
   "installCommand": "bun install",
   "framework": "nextjs"
 }

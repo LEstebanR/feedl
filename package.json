@@ -7,7 +7,7 @@
     "dev": "next dev --turbopack",
     "postinstall": "prisma generate || echo 'Prisma generate skipped'",
     "db:migrate": "prisma migrate deploy",
-    "build": "prisma generate && prisma migrate deploy && next build --turbopack",
+    "build": "prisma generate && (if [ -n \"$DATABASE_URL\" ]; then prisma migrate deploy; else echo 'Migration skipped - DATABASE_URL not available'; fi) && next build --turbopack",
     "start": "next start",
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
     "lint:fix": "eslint . --ext .ts,.tsx,.js,.jsx --fix",
