@@ -1,18 +1,56 @@
 'use client';
 
+import { useMutation } from '@tanstack/react-query';
 import { ArrowRight } from 'lucide-react';
+import { toast } from 'sonner';
 
 import { useState } from 'react';
 
 import { Button } from '@/components/ui/button';
 
+async function addToWaitlist(email: string) {
+  const response = await fetch('/api/waitlist', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ email }),
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message || 'Failed to add to waitlist');
+  }
+
+  return data;
+}
+
 export default function WaitList() {
   const [email, setEmail] = useState('');
 
+  const mutation = useMutation({
+    mutationFn: addToWaitlist,
+    onSuccess: () => {
+      toast.success('Successfully added to waitlist!', {
+        description: "We'll notify you when we launch.",
+      });
+      setEmail('');
+    },
+    onError: (error: Error) => {
+      toast.error('Failed to add to waitlist', {
+        description: error.message,
+      });
+    },
+  });
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission here
-    // Email: {email}
+    if (!email.trim()) {
+      toast.error('Email is required');
+      return;
+    }
+    mutation.mutate(email.trim());
   };
 
   return (
@@ -49,12 +87,18 @@ export default function WaitList() {
               value={email}
               onChange={e => setEmail(e.target.value)}
               required
+              disabled={mutation.isPending}
               className="w-full h-11 px-4 rounded-md border border-input bg-background text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
             />
           </div>
-          <Button type="submit" size="lg" className="h-11 px-6 shrink-0">
-            Join Waitlist
-            <ArrowRight className="ml-2 h-4 w-4" />
+          <Button
+            type="submit"
+            size="lg"
+            className="h-11 px-6 shrink-0"
+            disabled={mutation.isPending}
+          >
+            {mutation.isPending ? 'Adding...' : 'Join Waitlist'}
+            {!mutation.isPending && <ArrowRight className="ml-2 h-4 w-4" />}
           </Button>
         </form>
 

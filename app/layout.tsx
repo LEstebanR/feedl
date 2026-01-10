@@ -5,6 +5,8 @@ import { Outfit } from 'next/font/google';
 import { FeedbackProvider } from '@/components/feedback-context';
 import { Footer } from '@/components/footer';
 import { Header } from '@/components/header';
+import { Toaster } from '@/components/ui/sonner';
+import { ReactQueryProvider } from '@/lib/react-query';
 
 import './globals.css';
 
@@ -28,11 +30,14 @@ export default function RootLayout({
       <body
         className={`${outfit.variable} antialiase grid min-h-dvh grid-rows-[auto_1fr_auto] w-full`}
       >
-        <FeedbackProvider>
-          <Header />
-          {children}
-          <Footer />
-        </FeedbackProvider>
+        <ReactQueryProvider>
+          <FeedbackProvider>
+            <Header />
+            {children}
+            <Footer />
+          </FeedbackProvider>
+          <Toaster />
+        </ReactQueryProvider>
       </body>
     </html>
   );
