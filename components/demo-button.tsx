@@ -24,7 +24,6 @@ export function DemoButton() {
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      // eslint-disable-next-line no-undef
       setCurrentPage(window.location.href);
     }
   }, []);
@@ -49,9 +48,7 @@ export function DemoButton() {
 
         // Scroll to demo section after a short delay to allow state update
         if (typeof window !== 'undefined') {
-          // eslint-disable-next-line no-undef
           setTimeout(() => {
-            // eslint-disable-next-line no-undef
             const demoSection = document.getElementById('demo');
             if (demoSection) {
               demoSection.scrollIntoView({

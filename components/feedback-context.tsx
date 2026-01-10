@@ -38,14 +38,12 @@ const STORAGE_KEY = 'feedl-feedbacks';
 function loadFeedbacksFromStorage(): Feedback[] {
   if (typeof window === 'undefined') return [];
   try {
-    // eslint-disable-next-line no-undef
     const stored = localStorage.getItem(STORAGE_KEY);
     if (stored) {
       const parsed = JSON.parse(stored) as Feedback[];
       return parsed.slice(0, 5);
     }
   } catch (error) {
-    // eslint-disable-next-line no-undef
     console.error('Error loading feedbacks from localStorage:', error);
   }
   return [];
@@ -54,10 +52,8 @@ function loadFeedbacksFromStorage(): Feedback[] {
 function saveFeedbacksToStorage(feedbacks: Feedback[]) {
   if (typeof window === 'undefined') return;
   try {
-    // eslint-disable-next-line no-undef
     localStorage.setItem(STORAGE_KEY, JSON.stringify(feedbacks));
   } catch (error) {
-    // eslint-disable-next-line no-undef
     console.error('Error saving feedbacks to localStorage:', error);
   }
 }
