@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "postinstall": "prisma generate || echo 'Prisma generate skipped'",
-    "build": "prisma generate && next build --turbopack",
+    "db:migrate": "prisma migrate deploy",
+    "build": "prisma generate && prisma migrate deploy && next build --turbopack",
     "start": "next start",
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
     "lint:fix": "eslint . --ext .ts,.tsx,.js,.jsx --fix",
