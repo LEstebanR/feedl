@@ -40,6 +40,7 @@ function ProblemCard({
 
   return (
     <div
+      role="button"
       className="relative w-full cursor-pointer"
       onClick={() => setFlipped(true)}
       onMouseLeave={() => setFlipped(false)}

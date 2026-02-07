@@ -80,8 +80,8 @@ export function About() {
           </div>
           <h3 className="text-xl font-semibold mb-2">Easy Integration</h3>
           <p className="text-muted-foreground leading-relaxed">
-            Add one script tag to your site. That's it. Works with any framework
-            or platform.
+            Add one script tag to your site. That&apos;s it. Works with any
+            framework or platform.
           </p>
         </Card>
 
