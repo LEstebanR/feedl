@@ -5,6 +5,7 @@ import { ArrowRightIcon, MenuIcon, XIcon } from 'lucide-react';
 import { useState } from 'react';
 
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 import { Logo } from '@/components/logo';
 import { Button } from '@/components/ui/button';
@@ -29,6 +30,10 @@ const LINKS = [
     href: '#about',
   },
   {
+    label: 'Pricing',
+    href: '#pricing',
+  },
+  {
     label: 'Waitlist',
     href: '#wait-list',
   },
@@ -36,6 +41,15 @@ const LINKS = [
 
 export function Header() {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+  const isHome = pathname === '/';
+
+  const getLinkHref = (href: string) => {
+    if (href.startsWith('#') && !isHome) {
+      return `/${href}`;
+    }
+    return href;
+  };
 
   return (
     <header className="w-full flex items-center justify-center h-16 sticky top-0 bg-background z-50 ">
@@ -43,13 +57,13 @@ export function Header() {
         <Logo />
         <div className="items-center gap-x-8 hidden md:flex border rounded-full px-12 py-2">
           {LINKS.map(link => (
-            <a
+            <Link
               key={link.label}
-              href={link.href}
-              className="hover:text-primary hover:underline hover:underline-offset-4  "
+              href={getLinkHref(link.href)}
+              className="hover:text-primary hover:underline hover:underline-offset-4"
             >
               {link.label}
-            </a>
+            </Link>
           ))}
         </div>
 
@@ -71,29 +85,20 @@ export function Header() {
                     asChild
                     className="w-full text-lg"
                   >
-                    {link.href.startsWith('#') ? (
-                      <a
-                        href={link.href}
-                        className="flex items-center justify-between w-full"
-                      >
-                        {link.label} <ArrowRightIcon className="w-4 h-4" />
-                      </a>
-                    ) : (
-                      <Link
-                        href={link.href}
-                        className="flex items-center justify-between w-full"
-                      >
-                        {link.label} <ArrowRightIcon className="w-4 h-4" />
-                      </Link>
-                    )}
+                    <Link
+                      href={getLinkHref(link.href)}
+                      className="flex items-center justify-between w-full"
+                    >
+                      {link.label} <ArrowRightIcon className="w-4 h-4" />
+                    </Link>
                   </DropdownMenuItem>
                 ))}
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
-          <a href="#wait-list">
+          <Link href={getLinkHref('#wait-list')}>
             <Button>Start Now</Button>
-          </a>
+          </Link>
         </div>
       </div>
     </header>

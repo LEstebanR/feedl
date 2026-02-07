@@ -40,7 +40,15 @@ function validateEmailDomain(email: string): boolean {
 
 export async function POST(request: Request) {
   try {
-    const body = await request.json();
+    let body;
+    try {
+      body = await request.json();
+    } catch {
+      return NextResponse.json(
+        { success: false, message: 'Invalid JSON in request body' },
+        { status: 400 }
+      );
+    }
     const { email } = body;
 
     if (!email || typeof email !== 'string') {

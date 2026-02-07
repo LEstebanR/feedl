@@ -1,14 +1,12 @@
 import { Check } from 'lucide-react';
 
-import Link from 'next/link';
-
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 
 export default function Pricing() {
   return (
-    <section id="pricing" className="container mx-auto px-4 py-20 bg-muted/30">
+    <section id="pricing" className="w-full px-4 py-20 bg-muted/30">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
@@ -53,11 +51,11 @@ export default function Pricing() {
                 </li>
               </ul>
             </div>
-            <Link href="/login">
+            <a href="#wait-list">
               <Button variant="outline" className="w-full bg-transparent">
                 Get Started
               </Button>
-            </Link>
+            </a>
           </Card>
 
           {/* Pro Plan */}
@@ -97,9 +95,9 @@ export default function Pricing() {
                 </li>
               </ul>
             </div>
-            <Link href="/login">
+            <a href="#wait-list">
               <Button className="w-full">Get Started</Button>
-            </Link>
+            </a>
           </Card>
 
           {/* Enterprise Plan */}
@@ -135,9 +133,11 @@ export default function Pricing() {
                 </li>
               </ul>
             </div>
-            <Button variant="outline" className="w-full bg-transparent">
-              Contact Sales
-            </Button>
+            <a href="#wait-list" className="w-full">
+              <Button variant="outline" className="w-full bg-transparent">
+                Contact Sales
+              </Button>
+            </a>
           </Card>
         </div>
       </div>

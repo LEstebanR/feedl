@@ -6,7 +6,10 @@ import { toast } from 'sonner';
 
 import { useState } from 'react';
 
+import Link from 'next/link';
+
 import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
 
 async function addToWaitlist(email: string) {
   const response = await fetch('/api/waitlist', {
@@ -28,6 +31,7 @@ async function addToWaitlist(email: string) {
 
 export default function WaitList() {
   const [email, setEmail] = useState('');
+  const [consent, setConsent] = useState(false);
 
   const mutation = useMutation({
     mutationFn: addToWaitlist,
@@ -36,6 +40,7 @@ export default function WaitList() {
         description: "We'll notify you when we launch.",
       });
       setEmail('');
+      setConsent(false);
     },
     onError: (error: Error) => {
       toast.error('Failed to add to waitlist', {
@@ -48,6 +53,10 @@ export default function WaitList() {
     e.preventDefault();
     if (!email.trim()) {
       toast.error('Email is required');
+      return;
+    }
+    if (!consent) {
+      toast.error('Please accept the Privacy Policy and consent to updates');
       return;
     }
     mutation.mutate(email.trim());
@@ -78,28 +87,54 @@ export default function WaitList() {
 
         <form
           onSubmit={handleSubmit}
-          className="flex flex-col sm:flex-row gap-3 max-w-2xl mx-auto"
+          className="flex flex-col gap-4 max-w-2xl mx-auto"
         >
-          <div className="flex-1">
-            <input
-              type="email"
-              placeholder="Enter your email"
-              value={email}
-              onChange={e => setEmail(e.target.value)}
-              required
-              disabled={mutation.isPending}
-              className="w-full h-11 px-4 rounded-md border border-input bg-background text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-            />
+          <div className="flex flex-col sm:flex-row gap-3">
+            <div className="flex-1">
+              <input
+                type="email"
+                placeholder="Enter your email"
+                value={email}
+                onChange={e => setEmail(e.target.value)}
+                required
+                disabled={mutation.isPending}
+                className="w-full h-11 px-4 rounded-md border border-input bg-background text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+              />
+            </div>
+            <Button
+              type="submit"
+              size="lg"
+              className="h-11 px-6 shrink-0"
+              disabled={mutation.isPending || !consent}
+            >
+              {mutation.isPending ? 'Adding...' : 'Join Waitlist'}
+              {!mutation.isPending && <ArrowRight className="ml-2 h-4 w-4" />}
+            </Button>
           </div>
-          <Button
-            type="submit"
-            size="lg"
-            className="h-11 px-6 shrink-0"
-            disabled={mutation.isPending}
-          >
-            {mutation.isPending ? 'Adding...' : 'Join Waitlist'}
-            {!mutation.isPending && <ArrowRight className="ml-2 h-4 w-4" />}
-          </Button>
+
+          {/* GDPR Consent Checkbox */}
+          <div className="flex items-start gap-3">
+            <Checkbox
+              id="consent"
+              checked={consent}
+              onCheckedChange={checked => setConsent(checked === true)}
+              disabled={mutation.isPending}
+              className="mt-1"
+            />
+            <label
+              htmlFor="consent"
+              className="text-sm text-muted-foreground cursor-pointer leading-relaxed"
+            >
+              I agree to the{' '}
+              <Link
+                href="/privacy"
+                className="text-primary hover:underline font-medium"
+              >
+                Privacy Policy
+              </Link>{' '}
+              and consent to receiving updates about LESFeedback
+            </label>
+          </div>
         </form>
 
         <div className="flex flex-wrap items-center justify-center gap-6 mt-8 text-sm text-muted-foreground">

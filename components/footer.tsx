@@ -12,53 +12,72 @@ export function Footer() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="z-10 flex flex-wrap items-center justify-center gap-x-1 gap-y-3 sm:gap-x-2"
+        className="z-10 flex flex-col items-center justify-center gap-y-4"
       >
-        <div className="mx-2 h-[30px] w-[0.5px] rotate-[20deg]"></div>
-        <div className="flex items-center gap-x-2 text-xs sm:text-base">
-          <motion.span
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-slate-500"
-          >
-            Made with
-          </motion.span>
-          <motion.div
-            animate={{
-              scale: [1, 1.2, 1],
-            }}
-            transition={{
-              duration: 1.5,
-              repeat: Infinity,
-              repeatType: 'reverse',
-            }}
-          >
-            <Heart className="h-4 w-4 fill-red-500 text-red-500" />
-          </motion.div>
-          <motion.span
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="text-slate-500"
-          >
-            by
-          </motion.span>
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <Link
-              href="https://lesteban.dev"
-              target="_blank"
-              className="hover:text-primary hover:underline hover:underline-offset-4 hover:transition-all hover:duration-300"
+        {/* Legal Links Row */}
+        <div className="flex flex-wrap items-center justify-center gap-x-4 text-xs text-muted-foreground">
+          <Link href="/privacy" className="hover:text-primary hover:underline">
+            Privacy Policy
+          </Link>
+          <span>•</span>
+          <Link href="/terms" className="hover:text-primary hover:underline">
+            Terms of Service
+          </Link>
+        </div>
+
+        {/* Copyright Row */}
+        <div className="text-xs text-muted-foreground">
+          © {new Date().getFullYear()} LESFeedback. All rights reserved.
+        </div>
+
+        {/* Made with heart Row */}
+        <div className="flex flex-wrap items-center justify-center gap-x-1 gap-y-3 sm:gap-x-2">
+          <div className="mx-2 h-[30px] w-[0.5px] rotate-[20deg]"></div>
+          <div className="flex items-center gap-x-2 text-xs sm:text-base">
+            <motion.span
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="text-slate-500"
             >
-              LEstebanR
-            </Link>
-          </motion.div>
+              Made with
+            </motion.span>
+            <motion.div
+              animate={{
+                scale: [1, 1.2, 1],
+              }}
+              transition={{
+                duration: 1.5,
+                repeat: Infinity,
+                repeatType: 'reverse',
+              }}
+            >
+              <Heart className="h-4 w-4 fill-red-500 text-red-500" />
+            </motion.div>
+            <motion.span
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              className="text-slate-500"
+            >
+              by
+            </motion.span>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Link
+                href="https://lesteban.dev"
+                target="_blank"
+                className="hover:text-primary hover:underline hover:underline-offset-4 hover:transition-all hover:duration-300"
+              >
+                LEstebanR
+              </Link>
+            </motion.div>
+          </div>
         </div>
       </motion.div>
     </footer>

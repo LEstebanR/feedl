@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- Background with subtle purple tint -->
+  <rect width="64" height="64" rx="16" fill="#ede7f6" />
+
+  <!-- Message Square Icon in brand primary color -->
+  <g transform="translate(12, 12)">
+    <path
+      d="M 4 2 L 36 2 C 37.1046 2 38 2.8954 38 4 L 38 28 C 38 29.1046 37.1046 30 36 30 L 12 30 L 6 36 L 8 30 L 4 30 C 2.8954 30 2 29.1046 2 28 L 2 4 C 2 2.8954 2.8954 2 4 2 Z"
+      fill="#1e3a5f"
+      stroke="#0f1a35"
+      stroke-width="1.5"
+      stroke-linejoin="round"
+      stroke-linecap="round"
+    />
+  </g>
+</svg>
