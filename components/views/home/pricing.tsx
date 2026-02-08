@@ -13,47 +13,46 @@ export default function Pricing() {
             Simple, transparent pricing
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Choose the plan that fits your needs. All plans include unlimited
-            team members.
+            Start free, upgrade when you need more. No hidden fees.
           </p>
         </div>
 
         <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-          {/* Starter Plan */}
+          {/* Free Plan */}
           <Card className="p-8 hover:shadow-lg transition-shadow flex flex-col">
             <div className="flex-grow">
               <div className="mb-6">
-                <h3 className="text-2xl font-bold mb-2">Starter</h3>
+                <h3 className="text-2xl font-bold mb-2">Free</h3>
                 <p className="text-muted-foreground">
-                  Perfect for small projects
+                  Perfect to get started
                 </p>
               </div>
               <div className="mb-6">
-                <span className="text-4xl font-bold">$9</span>
+                <span className="text-4xl font-bold">$0</span>
                 <span className="text-muted-foreground">/month</span>
               </div>
               <ul className="space-y-3 mb-8">
                 <li className="flex items-start gap-2">
                   <Check className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
-                  <span className="text-sm">Up to 1,000 feedback/month</span>
+                  <span className="text-sm">Unlimited feedback widgets</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <Check className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
-                  <span className="text-sm">1 project</span>
+                  <span className="text-sm">1 website</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <Check className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
-                  <span className="text-sm">Basic analytics</span>
+                  <span className="text-sm">50 feedback submissions/month</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <Check className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
-                  <span className="text-sm">Email support</span>
+                  <span className="text-sm">Basic dashboard access</span>
                 </li>
               </ul>
             </div>
             <a href="#wait-list">
               <Button variant="outline" className="w-full bg-transparent">
-                Get Started
+                Get Started Free
               </Button>
             </a>
           </Card>
@@ -66,32 +65,28 @@ export default function Pricing() {
             <div className="flex-grow">
               <div className="mb-6">
                 <h3 className="text-2xl font-bold mb-2">Pro</h3>
-                <p className="text-muted-foreground">For growing businesses</p>
+                <p className="text-muted-foreground">For growing projects</p>
               </div>
               <div className="mb-6">
-                <span className="text-4xl font-bold">$29</span>
+                <span className="text-4xl font-bold">$9</span>
                 <span className="text-muted-foreground">/month</span>
               </div>
               <ul className="space-y-3 mb-8">
                 <li className="flex items-start gap-2">
                   <Check className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
-                  <span className="text-sm">Up to 10,000 feedback/month</span>
+                  <span className="text-sm">5 websites</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <Check className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
-                  <span className="text-sm">5 projects</span>
+                  <span className="text-sm">250 feedback submissions/month</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <Check className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
-                  <span className="text-sm">Advanced analytics</span>
+                  <span className="text-sm">Advanced dashboard features</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <Check className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
-                  <span className="text-sm">Priority support</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <Check className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
-                  <span className="text-sm">Custom branding</span>
+                  <span className="text-sm">Email support</span>
                 </li>
               </ul>
             </div>
@@ -100,42 +95,43 @@ export default function Pricing() {
             </a>
           </Card>
 
-          {/* Enterprise Plan */}
+          {/* Business Plan */}
           <Card className="p-8 hover:shadow-lg transition-shadow flex flex-col">
             <div className="flex-grow">
               <div className="mb-6">
-                <h3 className="text-2xl font-bold mb-2">Enterprise</h3>
-                <p className="text-muted-foreground">For large organizations</p>
+                <h3 className="text-2xl font-bold mb-2">Business</h3>
+                <p className="text-muted-foreground">For teams that scale</p>
               </div>
               <div className="mb-6">
-                <span className="text-4xl font-bold">Custom</span>
+                <span className="text-4xl font-bold">$29</span>
+                <span className="text-muted-foreground">/month</span>
               </div>
               <ul className="space-y-3 mb-8">
                 <li className="flex items-start gap-2">
                   <Check className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
-                  <span className="text-sm">Unlimited feedback</span>
+                  <span className="text-sm">Unlimited websites</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <Check className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
-                  <span className="text-sm">Unlimited projects</span>
+                  <span className="text-sm">Unlimited feedback submissions</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <Check className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
-                  <span className="text-sm">Custom integrations</span>
+                  <span className="text-sm">Priority support</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <Check className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
-                  <span className="text-sm">Dedicated support</span>
+                  <span className="text-sm">Slack & Discord integrations</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <Check className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
-                  <span className="text-sm">SLA guarantee</span>
+                  <span className="text-sm">White-labeling options</span>
                 </li>
               </ul>
             </div>
-            <a href="#wait-list" className="w-full">
+            <a href="#wait-list">
               <Button variant="outline" className="w-full bg-transparent">
-                Contact Sales
+                Get Started
               </Button>
             </a>
           </Card>
