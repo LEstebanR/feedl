@@ -1,11 +1,18 @@
 'use client';
 
-import { ArrowRightIcon, MenuIcon, XIcon } from 'lucide-react';
+import {
+  ArrowRightIcon,
+  LogOutIcon,
+  MenuIcon,
+  UserIcon,
+  XIcon,
+} from 'lucide-react';
 
 import { useState } from 'react';
 
+import Image from 'next/image';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 import { Logo } from '@/components/logo';
 import { Button } from '@/components/ui/button';
@@ -13,8 +20,11 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { authClient } from '@/lib/auth-client';
 
 const LINKS = [
   {
@@ -42,7 +52,9 @@ const LINKS = [
 export function Header() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
   const isHome = pathname === '/';
+  const { data: session, isPending } = authClient.useSession();
 
   const getLinkHref = (href: string) => {
     if (href.startsWith('#') && !isHome) {
@@ -51,11 +63,19 @@ export function Header() {
     return href;
   };
 
+  const handleSignOut = async () => {
+    await authClient.signOut({
+      fetchOptions: {
+        onSuccess: () => router.push('/'),
+      },
+    });
+  };
+
   return (
-    <header className="w-full flex items-center justify-center h-16 sticky top-0 bg-background z-50 ">
-      <div className=" flex items-center justify-between md:w-8/12 w-full px-2 md:px-0">
+    <header className="sticky top-0 z-50 flex h-16 w-full items-center justify-center bg-background">
+      <div className="flex w-full items-center justify-between px-2 md:w-8/12 md:px-0">
         <Logo />
-        <div className="items-center gap-x-8 hidden md:flex border rounded-full px-12 py-2">
+        <div className="hidden items-center gap-x-8 rounded-full border px-12 py-2 md:flex">
           {LINKS.map(link => (
             <Link
               key={link.label}
@@ -67,7 +87,7 @@ export function Header() {
           ))}
         </div>
 
-        <div className="items-center gap-x-2 flex">
+        <div className="flex items-center gap-x-2">
           <div className="md:hidden">
             <DropdownMenu modal={false} open={open} onOpenChange={setOpen}>
               <DropdownMenuTrigger asChild>
@@ -76,7 +96,7 @@ export function Header() {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent
-                className="w-[calc(100vw-2rem)] mx-[1rem] mt-4"
+                className="mx-[1rem] mt-4 w-[calc(100vw-2rem)]"
                 align="start"
               >
                 {LINKS.map(link => (
@@ -87,18 +107,56 @@ export function Header() {
                   >
                     <Link
                       href={getLinkHref(link.href)}
-                      className="flex items-center justify-between w-full"
+                      className="flex w-full items-center justify-between"
                     >
-                      {link.label} <ArrowRightIcon className="w-4 h-4" />
+                      {link.label} <ArrowRightIcon className="h-4 w-4" />
                     </Link>
                   </DropdownMenuItem>
                 ))}
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
-          <Link href={getLinkHref('#wait-list')}>
-            <Button>Start Now</Button>
-          </Link>
+
+          {isPending ? null : session ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="icon" className="rounded-full">
+                  {session.user.image ? (
+                    <Image
+                      src={session.user.image}
+                      alt=""
+                      width={32}
+                      height={32}
+                      className="rounded-full"
+                    />
+                  ) : (
+                    <UserIcon className="size-5" />
+                  )}
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuLabel>
+                  <p className="font-medium">{session.user.name}</p>
+                  <p className="text-muted-foreground text-xs">
+                    {session.user.email}
+                  </p>
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem asChild>
+                  <Link href="/dashboard">Dashboard</Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={handleSignOut}>
+                  <LogOutIcon className="size-4" />
+                  Sign out
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <Link href="/login">
+              <Button>Sign In</Button>
+            </Link>
+          )}
         </div>
       </div>
     </header>

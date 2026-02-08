@@ -3,8 +3,6 @@ import type { Metadata } from 'next';
 import { Outfit } from 'next/font/google';
 
 import { FeedbackProvider } from '@/components/feedback-context';
-import { Footer } from '@/components/footer';
-import { Header } from '@/components/header';
 import { Toaster } from '@/components/ui/sonner';
 import { ReactQueryProvider } from '@/lib/react-query';
 
@@ -94,15 +92,9 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body
-        className={`${outfit.variable} antialiase grid min-h-dvh grid-rows-[auto_1fr_auto] w-full`}
-      >
+      <body className={`${outfit.variable} min-h-dvh w-full antialiased`}>
         <ReactQueryProvider>
-          <FeedbackProvider>
-            <Header />
-            {children}
-            <Footer />
-          </FeedbackProvider>
+          <FeedbackProvider>{children}</FeedbackProvider>
           <Toaster />
         </ReactQueryProvider>
       </body>
