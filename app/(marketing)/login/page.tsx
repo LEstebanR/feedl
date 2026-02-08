@@ -4,6 +4,8 @@ import { Loader2Icon } from 'lucide-react';
 
 import { useState } from 'react';
 
+import { toast } from 'sonner';
+
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -45,6 +47,12 @@ export default function LoginPage() {
     await authClient.signIn.social({
       provider: 'google',
       callbackURL: '/dashboard',
+      fetchOptions: {
+        onError: () => {
+          setLoading(false);
+          toast.error('Authentication failed. Please try again.');
+        },
+      },
     });
   };
 
