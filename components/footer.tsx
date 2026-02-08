@@ -25,12 +25,6 @@ export function Footer() {
           </Link>
         </div>
 
-        {/* Copyright Row */}
-        <div className="text-xs text-muted-foreground">
-          © {new Date().getFullYear()} LESFeedback. All rights reserved.
-        </div>
-
-        {/* Made with heart Row */}
         <div className="flex flex-wrap items-center justify-center gap-x-1 gap-y-3 sm:gap-x-2">
           <div className="mx-2 h-[30px] w-[0.5px] rotate-[20deg]"></div>
           <div className="flex items-center gap-x-2 text-xs sm:text-base">
