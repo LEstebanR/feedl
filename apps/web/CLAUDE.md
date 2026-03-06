@@ -12,10 +12,10 @@ The main dashboard where authenticated users manage their projects and view coll
 
 - Next.js 15 (App Router, Turbopack)
 - Tailwind CSS v4 + shadcn/ui
-- Auth.js / NextAuth v5 (see LES-7)
+- Better Auth with Google OAuth (see LES-7)
 - `@lesfeedback/db` — shared Prisma client (imported from `packages/db`)
 
-## Planned Structure
+## Structure
 
 ```
 app/
@@ -23,19 +23,22 @@ app/
   page.tsx                         # redirect → /dashboard
   login/page.tsx                   # sign-in page (LES-7)
   dashboard/
-    layout.tsx                     # sidebar nav + auth guard
+    layout.tsx                     # auth guard (server component)
     page.tsx                       # projects list
+    sign-out-button.tsx            # client component
     [projectId]/
       page.tsx                     # feedback list + stats
       settings/page.tsx            # project settings
   api/
-    auth/[...nextauth]/route.ts    # Auth.js handler (LES-7)
+    auth/[...all]/route.ts         # Better Auth handler (LES-7)
     feedback/route.ts              # POST — receive widget feedback (LES-8)
 components/
   ui/                              # shadcn/ui primitives
   dashboard/                       # dashboard-specific components
 lib/
-  auth.ts                          # Auth.js config
+  auth.ts                          # Better Auth config (server)
+  auth-client.ts                   # Better Auth client (browser)
+middleware.ts                      # protects /dashboard/** routes
 ```
 
 ## Package Manager
@@ -64,7 +67,8 @@ After schema changes in `packages/db`, run `bunx prisma generate` from `packages
 ## Auth Rules (LES-7)
 
 - All `/dashboard/**` routes are protected — middleware redirects unauthenticated users to `/login`
-- Use `auth()` from `@/lib/auth` in Server Components that need the session
+- Use `auth.api.getSession({ headers: await headers() })` in Server Components that need the session
+- Use `authClient` from `@/lib/auth-client` in Client Components
 - Always scope DB queries to `session.user.id` — never return another user's data
 
 ## API Route Rules (LES-8)
@@ -83,8 +87,8 @@ After schema changes in `packages/db`, run `bunx prisma generate` from `packages
 | Variable | Description |
 |---|---|
 | `DATABASE_URL` | Neon PostgreSQL connection string |
-| `AUTH_SECRET` | Auth.js secret |
-| `AUTH_GOOGLE_ID` | Google OAuth client ID |
-| `AUTH_GOOGLE_SECRET` | Google OAuth client secret |
-| `RESEND_API_KEY` | Email provider for magic links |
+| `BETTER_AUTH_SECRET` | Better Auth secret |
+| `BETTER_AUTH_URL` | Base URL of this app (dev: http://localhost:3001) |
+| `GOOGLE_CLIENT_ID` | Google OAuth client ID |
+| `GOOGLE_CLIENT_SECRET` | Google OAuth client secret |
 | `NEXT_PUBLIC_WIDGET_URL` | URL of the deployed widget.js |
