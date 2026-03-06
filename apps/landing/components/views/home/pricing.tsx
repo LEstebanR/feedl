@@ -23,9 +23,7 @@ export default function Pricing() {
             <div className="flex-grow">
               <div className="mb-6">
                 <h3 className="text-2xl font-bold mb-2">Free</h3>
-                <p className="text-muted-foreground">
-                  Perfect to get started
-                </p>
+                <p className="text-muted-foreground">Perfect to get started</p>
               </div>
               <div className="mb-6">
                 <span className="text-4xl font-bold">$0</span>
@@ -78,7 +76,9 @@ export default function Pricing() {
                 </li>
                 <li className="flex items-start gap-2">
                   <Check className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
-                  <span className="text-sm">250 feedback submissions/month</span>
+                  <span className="text-sm">
+                    250 feedback submissions/month
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <Check className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
@@ -113,7 +113,9 @@ export default function Pricing() {
                 </li>
                 <li className="flex items-start gap-2">
                   <Check className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
-                  <span className="text-sm">Unlimited feedback submissions</span>
+                  <span className="text-sm">
+                    Unlimited feedback submissions
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <Check className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />

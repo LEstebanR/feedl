@@ -11,10 +11,7 @@ import { Card } from '@/components/ui/card';
 
 export function About() {
   return (
-    <section
-      id="about"
-      className="py-16 md:w-8/12 w-full px-6 md:px-0 mx-auto"
-    >
+    <section id="about" className="py-16 md:w-8/12 w-full px-6 md:px-0 mx-auto">
       <div className="flex flex-col items-center justify-center">
         <div className="text-center mb-16">
           <h2 className="text-xl md:text-2xl text-secondary tracking-tight text-center">
