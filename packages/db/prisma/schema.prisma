@@ -1,0 +1,12 @@
+// LESFeedback — Dashboard schema
+// Waitlist model lives in apps/landing/prisma/schema.prisma
+// This package will hold: User, Project, Feedback (see LES-6)
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}

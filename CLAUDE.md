@@ -1,91 +1,86 @@
-# Claude Setup for Feedl
+# LESFeedback — Monorepo Setup
 
 ## Project Overview
 
-**feedl** is a Next.js 15 full-stack application with a PostgreSQL database, built with modern tooling for performance and developer experience.
+**LESFeedback** is a lightweight feedback collection SaaS. It provides an embeddable JavaScript snippet that any website can add to collect user feedback. Responses are stored in PostgreSQL (Neon + Prisma) and visualized in a Next.js dashboard.
 
-**Stack:**
-
-- **Frontend**: Next.js 15 (App Router, Turbopack)
-- **Backend**: Next.js API routes with Prisma ORM
-- **Database**: PostgreSQL
-- **Styling**: Tailwind CSS v4 + shadcn/ui
-- **State**: React Query (TanStack Query)
-- **UI Libraries**: Radix UI, Lucide Icons, Framer Motion
-- **Code Quality**: ESLint (with TypeScript), Prettier
-
-## Project Structure
+## Monorepo Structure (Turborepo + bun workspaces)
 
 ```
-feedl/
-├── app/                    # Next.js App Router pages
-├── components/             # React components (shadcn/ui + custom)
-├── lib/                    # Utilities and shared logic
-├── prisma/                 # Database schema
-├── eslint.config.js        # ESLint configuration
-├── next.config.ts          # Next.js config
-└── package.json
+feedl/  (monorepo root)
+├── apps/
+│   ├── landing/    # @lesfeedback/landing — Next.js landing + waitlist (port 3000)
+│   ├── web/        # @lesfeedback/web     — Next.js dashboard app   (port 3001)
+│   └── widget/     # @lesfeedback/widget  — Vite IIFE widget bundle
+├── packages/
+│   └── db/         # @lesfeedback/db      — Prisma client + schema for dashboard
+├── turbo.json
+└── package.json    # workspace root
 ```
 
 ## Package Manager
 
-**IMPORTANT: This project uses `bun` as the package manager. Always use `bun` instead of `npm`, `yarn`, or `pnpm`.**
+**IMPORTANT: Always use `bun`. Never use npm, yarn, or pnpm.**
 
-- Install packages: `bun add <package>` / `bun add -d <package>`
-- Run scripts: `bun run <script>`
-- Install all deps: `bun install`
-- Add shadcn components: `bunx shadcn@latest add <component>`
+```bash
+bun install                          # install all workspace deps
+bun add <pkg> --cwd apps/web         # add dep to a specific app
+bunx shadcn@latest add <component>   # add shadcn component (run inside the app dir)
+bunx prisma generate                 # regenerate Prisma client types
+```
 
-## Key Commands
+## Key Commands (run from monorepo root)
 
-| Command              | Purpose                                                      |
-| -------------------- | ------------------------------------------------------------ |
-| `bun run dev`        | Start development server (Turbopack)                         |
-| `bun run build`      | Build for production (includes Prisma generate + migrations) |
-| `bun run start`      | Run production server                                        |
-| `bun run lint`       | Check code with ESLint                                       |
-| `bun run lint:fix`   | Fix ESLint issues automatically                              |
-| `bun run format`     | Format code with Prettier                                    |
-| `bun run db:migrate` | Run pending Prisma migrations                                |
+| Command              | Purpose                                        |
+| -------------------- | ---------------------------------------------- |
+| `bun run dev`        | Start all apps in dev mode (via Turbo)         |
+| `bun run build`      | Build all apps                                 |
+| `bun run typecheck`  | Typecheck all packages                         |
+| `bun run lint`       | Lint all packages                              |
+| `bun run format`     | Format all files with Prettier                 |
 
-## Database Setup
+## Per-app Commands (from app directory)
 
-- **ORM**: Prisma v7.2.0
-- **Adapter**: Prisma Postgres adapter (`@prisma/adapter-pg`)
-- **Migrations**: Managed with `prisma migrate`
-- **Config**: `.env` must contain `DATABASE_URL`
+| App         | Dev command                               | Port |
+| ----------- | ----------------------------------------- | ---- |
+| `landing`   | `cd apps/landing && bun run dev`          | 3000 |
+| `web`       | `cd apps/web && bun run dev`              | 3001 |
+| `widget`    | `cd apps/widget && bun run build`         | —    |
 
-## Development Tips
+## Database
 
-1. **Type Safety**: Project uses TypeScript 5. Always maintain type safety.
-2. **Component Library**: Use shadcn/ui components from `/components/ui/` when building UI.
-3. **Styling**: Use Tailwind CSS classes. Follow the prettier-plugin-tailwindcss class order.
-4. **Database Queries**: Use Prisma for all DB interactions. Regenerate types with `bunx prisma generate` after schema changes.
-5. **API Routes**: Place in `app/api/` directory. Use Next.js request/response patterns.
-6. **Testing**: No test framework configured yet. Consider adding if needed.
+- **Landing** (`apps/landing`): Has its own Prisma schema for the `Waitlist` model. Config in `apps/landing/prisma/`.
+- **Dashboard** (`packages/db`): Shared Prisma package for User, Project, Feedback models (to be implemented in LES-6). Import as `@lesfeedback/db`.
+- Regenerate client after schema changes: `bunx prisma generate` (run inside the relevant dir)
 
-## Code Style & Conventions
+## Tech Stack per App
 
-- **ESLint**: TypeScript + Next.js + Prettier integration
-- **Formatter**: Prettier with import sorting via `@trivago/prettier-plugin-sort-imports`
-- **Tailwind**: Sorted classes with prettier-plugin-tailwindcss
-- **File Names**: Use kebab-case for files (e.g., `my-component.tsx`)
+| App      | Framework        | Styling              | Notes                        |
+| -------- | ---------------- | -------------------- | ---------------------------- |
+| landing  | Next.js 15       | Tailwind v4 + shadcn | waitlist, privacy, terms     |
+| web      | Next.js 15       | Tailwind v4          | dashboard — see LES-10       |
+| widget   | Vite + Preact    | Injected CSS         | IIFE bundle, <20kb target    |
+
+## Code Conventions
+
+- **File names**: kebab-case (`my-component.tsx`)
+- **Imports**: absolute with `@/` alias inside each app
+- **Prettier**: configured at root, applies to all apps
+- **ESLint**: each app has its own config
+- **Commits**: follow conventional commit format with LES-# issue reference
 
 ## Before Making Changes
 
-- Always run `bun run lint:fix` before committing
-- Ensure `bun run format:check` passes
-- If modifying Prisma schema, run `bunx prisma migrate` and commit the migration file
-- Keep eslint.config.js stable (currently modified - consider addressing)
+- Run `bun run typecheck` from root before committing
+- For Prisma schema changes: edit schema → `bunx prisma migrate dev --name <name>` → `bunx prisma generate`
+- Widget changes: check bundle size after `bun run build` in `apps/widget` — target <20kb gzipped
 
-## Common Tasks
+## Linear Issues
 
-**Creating a new page**: Add file to `app/` directory using App Router conventions
-**Creating a component**: Add to `components/` with TypeScript, use shadcn/ui base components
-**Adding a database model**: Update `prisma/schema.prisma`, create migration, run `bunx prisma generate`
-**Adding an API endpoint**: Create file in `app/api/` following Next.js conventions
-
-## Current Status
-
-- Git branch: `main`
-- Pending: eslint.config.js has uncommitted changes
+- LES-5: Monorepo setup (this issue — completed)
+- LES-6: Prisma schema (User, Project, Feedback)
+- LES-7: Auth.js (NextAuth v5)
+- LES-8: Feedback API routes
+- LES-9: Widget development
+- LES-10: Dashboard UI
+- LES-11: Widget hosting + embed snippet
