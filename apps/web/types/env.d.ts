@@ -6,12 +6,11 @@ declare global {
       NODE_ENV: 'development' | 'production' | 'test';
       // Database (via @lesfeedback/db)
       DATABASE_URL: string;
-      // Auth.js (LES-7)
-      AUTH_SECRET: string;
-      AUTH_GOOGLE_ID: string;
-      AUTH_GOOGLE_SECRET: string;
-      // Resend email provider (LES-13)
-      RESEND_API_KEY: string;
+      // Better Auth (LES-7)
+      BETTER_AUTH_SECRET: string;
+      BETTER_AUTH_URL: string;
+      GOOGLE_CLIENT_ID: string;
+      GOOGLE_CLIENT_SECRET: string;
       // Sentry (LES-17)
       SENTRY_DSN?: string;
       // Public vars
