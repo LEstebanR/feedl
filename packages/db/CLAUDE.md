@@ -77,3 +77,7 @@ const projects = await prisma.project.findMany({
 ```
 
 Never expose raw Prisma errors to API responses — catch and return generic messages.
+
+## Git
+
+**Never run `git add` or `git commit`** — the user handles all commits.

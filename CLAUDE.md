@@ -67,13 +67,14 @@ bunx prisma generate                 # regenerate Prisma client types
 - **Imports**: absolute with `@/` alias inside each app
 - **Prettier**: configured at root, applies to all apps
 - **ESLint**: each app has its own config
-- **Commits**: follow conventional commit format with LES-# issue reference
+- **Commits**: done by the user — never commit automatically
 
-## Before Making Changes
+## Before Finishing Changes
 
-- Run `bun run typecheck` from root before committing
+- Run `bun run typecheck` from root to verify no type errors
 - For Prisma schema changes: edit schema → `bunx prisma migrate dev --name <name>` → `bunx prisma generate`
 - Widget changes: check bundle size after `bun run build` in `apps/widget` — target <20kb gzipped
+- Do NOT run `git add` or `git commit` — the user handles all commits
 
 ## Linear Issues
 

@@ -70,3 +70,4 @@ Requires `DATABASE_URL` in `.env`.
 - New sections go in `components/views/home/`
 - Use shadcn/ui components from `components/ui/` for all UI primitives
 - File names: kebab-case
+- **Never run `git add` or `git commit`** — the user handles all commits

@@ -74,6 +74,10 @@ After schema changes in `packages/db`, run `bunx prisma generate` from `packages
 - Always validate request body with Zod before using it
 - Return consistent error shape: `{ error: string }`
 
+## Git
+
+**Never run `git add` or `git commit`** — the user handles all commits.
+
 ## Key Env Vars
 
 | Variable | Description |

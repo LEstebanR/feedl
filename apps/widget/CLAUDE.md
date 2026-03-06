@@ -83,6 +83,10 @@ fetch(`${API_URL}/api/feedback`, {
 VITE_API_URL=http://localhost:3001
 ```
 
+## Git
+
+**Never run `git add` or `git commit`** — the user handles all commits.
+
 ## Testing Locally
 
 Build the widget, then open the test file in a browser:
