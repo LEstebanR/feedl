@@ -1,7 +1,7 @@
-/// <reference types="vite/client" />
 import { useState } from 'preact/hooks'
+import './env.d.ts'
 
-const API_URL = (import.meta.env['VITE_API_URL'] as string | undefined) ?? 'https://app.lesfeedback.com'
+const API_URL = import.meta.env.VITE_API_URL ?? 'https://app.lesfeedback.com'
 
 const STYLES = `
   #lf-btn {

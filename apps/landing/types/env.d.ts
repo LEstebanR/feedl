@@ -3,14 +3,14 @@
 declare global {
   namespace NodeJS {
     interface ProcessEnv {
-      DATABASE_URL: string;
       NODE_ENV: 'development' | 'production' | 'test';
+      // Database
+      DATABASE_URL: string;
+      // Landing-specific
+      MIGRATION_SECRET: string;
+      NEXT_PUBLIC_APP_URL: string;
     }
   }
-
-  var process: {
-    env: NodeJS.ProcessEnv;
-  };
 }
 
 export {};
