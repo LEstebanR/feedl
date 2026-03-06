@@ -13,7 +13,7 @@ export function About() {
   return (
     <section
       id="about"
-      className="py-16 md:w-8/12 w-full px-2 md:px-0 mx-auto "
+      className="py-16 md:w-8/12 w-full px-6 md:px-0 mx-auto"
     >
       <div className="flex flex-col items-center justify-center">
         <div className="text-center mb-16">

@@ -67,7 +67,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="overflow-x-clip">
       <head>
         <script
           type="application/ld+json"
@@ -95,7 +95,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${outfit.variable} antialiase grid min-h-dvh grid-rows-[auto_1fr_auto] w-full`}
+        className={`${outfit.variable} antialiase grid min-h-dvh grid-rows-[auto_1fr_auto] w-full overflow-x-hidden`}
       >
         <ReactQueryProvider>
           <FeedbackProvider>

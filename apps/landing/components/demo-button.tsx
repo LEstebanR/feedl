@@ -66,7 +66,7 @@ export function DemoButton() {
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button
-          className="fixed -right-6 top-1/2 -translate-y-1/2 rotate-[-90deg] z-50 origin-center rounded-b-none px-4 py-2"
+          className="fixed -right-8 md:-right-6 top-1/2 -translate-y-1/2 rotate-[-90deg] z-50 origin-center rounded-b-none px-4 py-2 text-sm md:text-base"
           variant="default"
         >
           Feedback

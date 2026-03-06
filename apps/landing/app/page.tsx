@@ -2,7 +2,6 @@ import { DemoButton } from '@/components/demo-button';
 import { About } from '@/components/views/home/about';
 import Demo from '@/components/views/home/demo';
 import { Hero } from '@/components/views/home/hero';
-import Pricing from '@/components/views/home/pricing';
 import { Problem } from '@/components/views/home/problem';
 import WaitList from '@/components/views/home/waitList';
 
@@ -13,7 +12,6 @@ export default function Home() {
       <Problem />
       <Demo />
       <About />
-      <Pricing />
       <WaitList />
       <DemoButton />
     </div>

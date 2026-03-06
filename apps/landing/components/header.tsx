@@ -30,10 +30,6 @@ const LINKS = [
     href: '#about',
   },
   {
-    label: 'Pricing',
-    href: '#pricing',
-  },
-  {
     label: 'Waitlist',
     href: '#wait-list',
   },
