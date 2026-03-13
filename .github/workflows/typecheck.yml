@@ -1,0 +1,38 @@
+name: TypeCheck
+
+on:
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: typecheck-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  typecheck:
+    name: TypeCheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.12'
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Generate Prisma clients
+        run: |
+          cd packages/db && bunx prisma generate
+          cd ../..
+          cd apps/landing && bunx prisma generate
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
+      - name: TypeCheck
+        run: bun run typecheck
