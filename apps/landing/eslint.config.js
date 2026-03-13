@@ -109,6 +109,11 @@ export default [
       '*.min.css',
       '.turbo/**',
       'out/**',
+      'generated/**',
+      'eslint.config.js',
+      'prisma.config.js',
+      'tailwind.config.js',
+      'postcss.config.mjs',
     ],
   },
 ];
