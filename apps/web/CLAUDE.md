@@ -49,10 +49,16 @@ middleware.ts                      # protects /dashboard/** routes
 bun run dev          # dev server on :3001
 bun run build        # production build
 bun run typecheck    # tsc --noEmit
-bun run lint
+bun run lint         # eslint
+bun run test         # bun test (runs __tests__/**/*.test.ts)
 bun add <pkg>        # add dep to THIS app only
 bunx shadcn@latest add <component>
 ```
+
+## Tests
+
+Test files live in `__tests__/` and use the bun test runner (`bun:test`).
+Add tests for any non-trivial business logic. All tests must pass in CI before merging.
 
 ## Database
 
@@ -80,7 +86,7 @@ After schema changes in `packages/db`, run `bunx prisma generate` from `packages
 
 ## Git
 
-**Never run `git add` or `git commit`** — the user handles all commits.
+Commits are allowed on feature branches. **Never commit directly to `main`** — always open a PR. CI (lint, typecheck, test) must pass before merging.
 
 ## Key Env Vars
 

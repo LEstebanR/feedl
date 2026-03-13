@@ -52,16 +52,21 @@ bunx shadcn@latest add <component>
 
 ## Database (Waitlist)
 
-The landing has its own isolated Prisma schema (`prisma/schema.prisma`) with a single `Waitlist` model. It does NOT use `@lesfeedback/db` — that package is for the dashboard.
+The landing has its own **isolated** Prisma schema (`prisma/schema.prisma`) with a single `Waitlist` model. It does NOT use `@lesfeedback/db` — that package is for the dashboard.
+
+The Prisma client is generated to a **local path** (`generated/prisma`) to avoid conflicts with the dashboard client:
+- Schema output: `generator client { output = "../generated/prisma" }`
+- Import in code: `import { PrismaClient } from '@/generated/prisma'`
+- The `generated/prisma/` directory is gitignored — regenerate after cloning.
 
 ```bash
-# From apps/landing/
+# From apps/landing/  — requires Node.js 22.12+
 bunx prisma migrate dev --name <name>   # create migration
-bunx prisma generate                    # regenerate client
+bunx prisma generate                    # regenerate client (run after cloning)
 bunx prisma studio                      # browse data
 ```
 
-Requires `DATABASE_URL` in `.env`.
+`DATABASE_URL` is read from the monorepo root `.env`.
 
 ## Key Rules
 
@@ -70,4 +75,4 @@ Requires `DATABASE_URL` in `.env`.
 - New sections go in `components/views/home/`
 - Use shadcn/ui components from `components/ui/` for all UI primitives
 - File names: kebab-case
-- **Never run `git add` or `git commit`** — the user handles all commits
+- **Never commit directly to `main`** — always use a feature branch and open a PR

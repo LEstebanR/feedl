@@ -16,7 +16,8 @@ Shared database package for the LESFeedback dashboard. Exports a typed Prisma cl
 
 ```
 prisma/
-  schema.prisma   # Dashboard models: User, Project, Feedback (LES-6)
+  schema.prisma   # Dashboard models: User, Project, Feedback
+  migrations/     # SQL migration history
 src/
   index.ts        # Exports prisma client + re-exports @prisma/client types
 ```
@@ -25,7 +26,7 @@ src/
 
 ## Package Manager
 
-**Always use `bun`. Run commands from `packages/db/`.**
+**Always use `bun`. Run commands from `packages/db/`. Requires Node.js 22.12+.**
 
 ```bash
 bunx prisma migrate dev --name <name>   # create and apply a new migration
@@ -60,10 +61,12 @@ model Example {
 - Optional fields use `?`
 - Unstructured data: `Json?`
 - Foreign keys: keep both scalar (`userId String`) and relation field
+- The datasource **must** include `url = env("DATABASE_URL")` for migrations to work
 
 ## Env Var
 
-Requires `DATABASE_URL` in the app that uses this package (set in `apps/web/.env`).
+`DATABASE_URL` is set in the monorepo root `.env` and is picked up by all apps and packages.
+It is also configured as a GitHub Actions secret for CI.
 
 ## Usage in apps/web
 
@@ -80,4 +83,4 @@ Never expose raw Prisma errors to API responses — catch and return generic mes
 
 ## Git
 
-**Never run `git add` or `git commit`** — the user handles all commits.
+Commits are allowed on feature branches. **Never commit directly to `main`** — always open a PR and let CI pass first.
