@@ -8,6 +8,8 @@
 
 ```
 feedl/  (monorepo root)
+├── .github/
+│   └── workflows/      # CI: lint.yml, typecheck.yml, test.yml
 ├── apps/
 │   ├── landing/    # @lesfeedback/landing — Next.js landing + waitlist (port 3000)
 │   ├── web/        # @lesfeedback/web     — Next.js dashboard app   (port 3001)
@@ -37,6 +39,7 @@ bunx prisma generate                 # regenerate Prisma client types
 | `bun run build`      | Build all apps                                 |
 | `bun run typecheck`  | Typecheck all packages                         |
 | `bun run lint`       | Lint all packages                              |
+| `bun run test`       | Run all test suites                            |
 | `bun run format`     | Format all files with Prettier                 |
 
 ## Per-app Commands (from app directory)
@@ -49,9 +52,10 @@ bunx prisma generate                 # regenerate Prisma client types
 
 ## Database
 
-- **Landing** (`apps/landing`): Has its own Prisma schema for the `Waitlist` model. Config in `apps/landing/prisma/`.
-- **Dashboard** (`packages/db`): Shared Prisma package for User, Project, Feedback models (to be implemented in LES-6). Import as `@lesfeedback/db`.
+- **Landing** (`apps/landing`): Has its own Prisma schema for the `Waitlist` model. Config in `apps/landing/prisma/`. Client is generated locally to `apps/landing/generated/prisma` (isolated from the dashboard client).
+- **Dashboard** (`packages/db`): Shared Prisma package for User, Project, Feedback models. Import as `@lesfeedback/db`.
 - Regenerate client after schema changes: `bunx prisma generate` (run inside the relevant dir)
+- **Node.js 22.12+ required** for Prisma v7 CLI (`prisma migrate dev`, `prisma generate`)
 
 ## Tech Stack per App
 
@@ -67,19 +71,31 @@ bunx prisma generate                 # regenerate Prisma client types
 - **Imports**: absolute with `@/` alias inside each app
 - **Prettier**: configured at root, applies to all apps
 - **ESLint**: each app has its own config
-- **Commits**: done by the user — never commit automatically
+- **Commits**: allowed on feature branches — never commit directly to `main`
+
+## CI / GitHub
+
+Three required checks run on every PR to `main`:
+- **Lint** — `bun run lint`
+- **TypeCheck** — `bunx prisma generate` + `bun run typecheck`
+- **Test** — `bun run test`
+
+Branch protection on `main` requires all three to pass. Branches are auto-deleted after merge.
+GitHub secret `DATABASE_URL` is set for CI (used by the TypeCheck job to run `prisma generate`).
 
 ## Before Finishing Changes
 
 - Run `bun run typecheck` from root to verify no type errors
+- Run `bun run lint` from root to verify no lint errors
+- Run `bun run test` from root to verify tests pass
 - For Prisma schema changes: edit schema → `bunx prisma migrate dev --name <name>` → `bunx prisma generate`
 - Widget changes: check bundle size after `bun run build` in `apps/widget` — target <20kb gzipped
-- Do NOT run `git add` or `git commit` — the user handles all commits
+- **Never commit to `main` directly** — always use a feature branch and open a PR
 
 ## Linear Issues
 
-- LES-5: Monorepo setup (this issue — completed)
-- LES-6: Prisma schema (User, Project, Feedback)
+- LES-5: Monorepo setup (completed)
+- LES-6: Prisma schema (User, Project, Feedback) (completed)
 - LES-7: Auth.js (NextAuth v5)
 - LES-8: Feedback API routes
 - LES-9: Widget development
