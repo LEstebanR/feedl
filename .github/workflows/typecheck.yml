@@ -28,9 +28,8 @@ jobs:
 
       - name: Generate Prisma clients
         run: |
-          cd packages/db && bunx prisma generate
-          cd ../..
-          cd apps/landing && bunx prisma generate
+          cd packages/db && ../../node_modules/.bin/prisma generate
+          cd ../../apps/landing && ../../node_modules/.bin/prisma generate
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
 

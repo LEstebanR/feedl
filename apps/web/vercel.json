@@ -1,0 +1,5 @@
+{
+  "installCommand": "cd ../.. && bun install && ./node_modules/.bin/prisma generate --schema=packages/db/prisma/schema.prisma",
+  "buildCommand": "next build",
+  "framework": "nextjs"
+}
